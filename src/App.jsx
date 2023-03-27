@@ -10,20 +10,20 @@ export default function App() {
 	const [html, setHTML] = useState("")
 
 	useEffect(function(){
-			(async function(){
-        try{
-          const content = await axios.get('https://markdown-previewer-sable.vercel.app/sample.md')
-				  setMarkDown(content.data)
-				  setHTML(() => marked.parse(content.data))
-        }catch(e){
-          const errMsg = "No data received."
-          setMarkDown(() => errMsg)
-          setHTML(() => errMsg)
-        }
-        marked.setOptions({
-          breaks: true
-        })
-			})()
+		(async function(){
+			try{
+			const content = await axios.get('/sample.md')
+				setMarkDown(content.data)
+				setHTML(() => marked.parse(content.data))
+			}catch(e){
+			const errMsg = "No data received."
+			setMarkDown(() => errMsg)
+			setHTML(() => errMsg)
+			}
+			marked.setOptions({
+			breaks: true
+			})
+		})()
 	}, [])
 
 	function onEditorChange(event){
