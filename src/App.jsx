@@ -12,16 +12,16 @@ export default function App() {
 	useEffect(function(){
 		(async function(){
 			try{
-			const content = await axios.get('/sample.md')
+				const content = await axios.get('/sample.md')
 				setMarkDown(content.data)
 				setHTML(() => marked.parse(content.data))
 			}catch(e){
-			const errMsg = "No data received."
-			setMarkDown(() => errMsg)
-			setHTML(() => errMsg)
+				const errMsg = "No data received."
+				setMarkDown(() => errMsg)
+				setHTML(() => errMsg)
 			}
 			marked.setOptions({
-			breaks: true
+				breaks: true
 			})
 		})()
 	}, [])
