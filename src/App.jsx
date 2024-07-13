@@ -8,7 +8,7 @@ import Preview from './components/Preview'
 export default function App() {
 	const [markdown, setMarkDown] = useState("")
 	const [html, setHTML] = useState("")
-	const styleSheet = '<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.3/css/bootstrap.min.css">'
+	const styleSheet = '<link rel="stylesheet" href="/bootstrap.min.css">'
 
 	useEffect(function(){
 		(async function(){
@@ -27,13 +27,39 @@ export default function App() {
 		})()
 	}, [])
 
+	function makeTextFile(text) {
+		if (text !== null && text !== "") {
+			const data = new Blob([text], { type: 'text/plain' })
+			return window.URL.createObjectURL(data)
+		}
+		return "javascript:;";
+	}
+
 	function onEditorChange(event){
 		setMarkDown(() => event.target.value)
 		setHTML(() => styleSheet + marked.parse(event.target.value))
 	}
 
+	function onDownload(event){
+		const link = document.createElement('a')
+		link.setAttribute('download', 'markdown.md')
+		link.href = makeTextFile(markdown)
+		document.body.appendChild(link)
+	
+		window.requestAnimationFrame(function () {
+			const event = new MouseEvent('click')
+			link.dispatchEvent(event)
+			document.body.removeChild(link)
+		});
+	}
+
+	async function onCopy(event){
+		await navigator.clipboard.writeText(markdown)
+	}
+
 	return(
-		<div className="row gap-0" id="previewer">
+		<>
+		<div className="row gap-0 mb-4" id="previewer">
 			<div className="col-12 col-sm-12 col-md-12 col-lg-6 mb-5">
 				<Editor handler={onEditorChange} markdown={markdown} />
 			</div>
@@ -41,5 +67,16 @@ export default function App() {
 				<Preview htmlContent={html} />
 			</div>
 		</div>
+		<div className="row justify-content-center align-items-center mb-2">
+			<div className="col-12 col-sm-12 col-md-3 col-lg-2 col-xl-2">
+				<button onClick={onDownload} className="btn btn-success w-100"><i className="fa fa-arrow-down"></i> Download</button>
+			</div>
+		</div>
+		<div className="row justify-content-center align-items-center">
+			<div className="col-12 col-sm-12 col-md-3 col-lg-2 col-xl-2">
+				<button onClick={onCopy} className="btn btn-primary w-100"><i className="fa fa-copy"></i> Copy</button>
+			</div>
+		</div>
+		</>
 	)
 }
