@@ -4,13 +4,19 @@
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/vite.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.3/css/bootstrap.min.css">
     <title>Markdown Previewer: Aebibtech</title>
   </head>
-  <body>
-    <h1>Markdown Previewer</h1>
-    <h2><a href="https://aebibtech.com" target="_blank">&copy; Aebibtech</a></h2>
-    <div id="root"></div>
+  <body class="bg-dark text-light">
+    <header class="my-3">
+      <h1>Markdown Previewer</h1>
+    </header>
+    <div class="container" id="root"></div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.3/js/bootstrap.min.js"></script>
     <script type="module" src="/src/main.jsx"></script>
-    <script src="https://cdn.freecodecamp.org/testable-projects-fcc/v1/bundle.js"></script>
+    <!-- <script src="https://cdn.freecodecamp.org/testable-projects-fcc/v1/bundle.js"></script> -->
   </body>
+  <footer class="text-center mt-5 mb-3">
+    <a class="text-white" href="https://aebibtech.com" target="_blank">&copy; Aebibtech</a>
+  </footer>
 </html>
